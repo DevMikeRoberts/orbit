@@ -20,40 +20,114 @@ body {
 }
 
 .card {
+  font-size: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.02rem;
-  padding: 0.08rem 0.12rem;
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 2px;
-  min-width: 30px;
-  max-width: 45px;
+  gap: 0.1em;
+  padding: 0.4em 0.5em;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.03) 100%);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  will-change: backdrop-filter;
+  border: none;
+  border-radius: 6px;
+  min-width: 200px;
+  max-width: 320px;
   animation: cardEnter 0.6s ease-out forwards;
   pointer-events: none;
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.08);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  border-radius: 6px;
+  z-index: 0;
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .card-city {
-  font-size: 0.18rem;
+  font-size: 0.65em;
   font-style: italic;
   color: rgba(255, 255, 255, 0.5);
   letter-spacing: -0.01em;
   line-height: 1;
-  margin-bottom: 0.02rem;
+  margin-bottom: 0.12em;
+  padding-left: 1px;
 }
 
-.card-inner {
+.card-company-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.06em;
+  margin-bottom: 0.15em;
+}
+
+.card-company-row {
+  display: flex;
+  align-items: center;
+  gap: 0.1em;
+}
+
+.card-company-logo {
+  width: 0.8em;
+  height: 0.8em;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.card-company-name {
+  font-size: 0.7em;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.card-work-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.card-work-entry {
+  display: flex;
+  align-items: center;
+}
+
+.card-work-title {
+  font-size: 0.6em;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.3;
+}
+
+.card-sub-entry {
+  margin-bottom: 0.15em;
+}
+
+.card-sub-entry:last-child {
+  margin-bottom: 0;
+}
+
+.card-sub-header {
   display: flex;
   align-items: flex-start;
-  gap: 0.06rem;
+  gap: 0.1em;
 }
 
 .card-emoji {
-  font-size: 0.22rem;
+  font-size: 0.8em;
   line-height: 1;
   flex-shrink: 0;
+  margin-top: 0.03em;
 }
 
 .card-body {
@@ -64,7 +138,7 @@ body {
 }
 
 .card-role {
-  font-size: 0.2rem;
+  font-size: 0.75em;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.95);
   letter-spacing: -0.01em;
@@ -72,13 +146,13 @@ body {
 }
 
 .card-place {
-  font-size: 0.18rem;
+  font-size: 0.6em;
   color: rgba(255, 255, 255, 0.55);
   line-height: 1.1;
 }
 
 .card-date {
-  font-size: 0.16rem;
+  font-size: 0.55em;
   color: rgba(255, 255, 255, 0.3);
 }
 
@@ -99,6 +173,113 @@ body {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-6px);
+    transform: translateY(-4px);
   }
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(2);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.live-pin {
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.15em;
+}
+
+.live-avatar-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  flex-shrink: 0;
+}
+
+.live-avatar {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  clip-path: circle(50%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #333;
+  box-shadow: inset 0 0 0 0.5px rgba(34, 197, 94, 0.6);
+  position: relative;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+.live-ping-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  margin-left: -0.75em;
+  margin-top: -0.75em;
+  border-radius: 50%;
+  border: 0.5px solid #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+  animation: ping 2s ease-out infinite;
+  z-index: 0;
+}
+
+.live-ping-ring--delay {
+  animation-delay: 1s;
+}
+
+.live-pin-emoji {
+  position: absolute;
+  bottom: -0.05em;
+  right: -0.2em;
+  font-size: 0.65em;
+  z-index: 2;
+  line-height: 1;
+}
+
+.live-text-bubble {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0;
+  background: rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  will-change: backdrop-filter;
+  mix-blend-mode: screen;
+  border: none;
+  border-radius: 1px;
+  padding: 0.2em 0.3em;
+  position: relative;
+  white-space: nowrap;
+}
+
+.live-subtitle {
+  font-size: 0.55em;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1;
+}
+
+.live-city {
+  font-size: 0.6em;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1;
 }

@@ -1,92 +1,111 @@
 "use client";
 
-import { Suspense, useRef, useEffect } from "react";
-import type * as THREE from "three";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Suspense, useRef } from "react";
+import * as THREE from "three";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+
 import { Earth } from "./Earth";
 import { Atmosphere } from "./Atmosphere";
 import { Stars } from "./Stars";
 import { Clouds } from "./Clouds";
 import { PinWithCard } from "./PinWithCard";
+import { HaloRing } from "./HaloRing";
+import { LivePin } from "./LivePin";
 import { FadeIn } from "./FadeIn";
 import { locations } from "@/data/locations";
+import { useKonami } from "@/context/KonamiContext";
 import type { View } from "@/app/page";
 
-function CameraController({ view }: { view: View }) {
-  const { controls } = useThree();
-  const prevView = useRef(view);
+function SceneContent({ view }: { view: View }) {
+  const globeGroupRef = useRef<THREE.Group>(null);
+  const spinProgress = useRef(0);
+  const { activated } = useKonami();
+  const didLog = useRef(false);
 
-  useEffect(() => {
-    if (prevView.current === view) return;
-    prevView.current = view;
+  useFrame((_, delta) => {
+    if (!globeGroupRef.current) return;
 
-    const c = controls as { autoRotate: boolean } | null;
-    if (c) c.autoRotate = view === "home";
-  }, [view, controls]);
+    if (activated && spinProgress.current < 1) {
+      spinProgress.current = Math.min(1, spinProgress.current + delta * 1.5);
+      globeGroupRef.current.rotation.y += delta * 8 * (1 - spinProgress.current);
+    }
 
-  return null;
+    if (activated && !didLog.current) {
+      didLog.current = true;
+      console.log("117");
+      console.log("Finish the Fight");
+    }
+  });
+
+  return (
+    <>
+      <ambientLight intensity={1.0} />
+      <directionalLight
+        position={[0, 0.5, 5]}
+        intensity={12.0}
+        color="#ffffff"
+      />
+
+      <OrbitControls
+        autoRotate={view === "home"}
+        autoRotateSpeed={0.15}
+        enablePan={false}
+        enableZoom={view === "home"}
+        enableRotate={view === "home"}
+        minPolarAngle={0.1}
+        maxPolarAngle={Math.PI * 0.85}
+        minDistance={2.0}
+        maxDistance={4.0}
+      />
+
+      <FadeIn delay={0} duration={0.5}>
+        <Stars />
+      </FadeIn>
+
+      <group
+        ref={globeGroupRef}
+        rotation={[Math.PI * 0.13, Math.PI * -0.03, 0]}
+      >
+        <FadeIn delay={0.3} duration={0.8}>
+          <Suspense fallback={null}>
+            <Earth />
+          </Suspense>
+        </FadeIn>
+
+        <Clouds />
+
+        <FadeIn delay={0.7} duration={0.6}>
+          <Atmosphere />
+        </FadeIn>
+
+        <HaloRing />
+
+        <FadeIn delay={1.2} duration={0.5}>
+          {locations.map((location, i) => (
+            <PinWithCard
+              key={location.id}
+              location={location}
+              index={i}
+              cardDelay={1.8 + i * 0.15}
+            />
+          ))}
+          <LivePin lat={33.749} lng={-84.388} />
+        </FadeIn>
+      </group>
+    </>
+  );
 }
 
 export function GlobeScene({ view }: { view: View }) {
-  const globeRef = useRef<THREE.Mesh>(null);
-
   return (
     <div className="fixed inset-0">
       <Canvas
         dpr={[1, 1.5]}
-        camera={{ position: [-0.32, 0.63, 2.30], fov: 35 }}
-        gl={{ antialias: true }}
+        camera={{ position: [-0.32, 0.63, 2.6], fov: 35 }}
+        gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1 }}
       >
-        <ambientLight intensity={1.0} />
-        <directionalLight
-          position={[0, 0.5, 5]}
-          intensity={12.0}
-          color="#ffffff"
-        />
-
-        <OrbitControls
-          autoRotate={view === "home"}
-          autoRotateSpeed={0.08}
-          enablePan={false}
-          enableZoom={view === "home"}
-          enableRotate={view === "home"}
-          minPolarAngle={0.1}
-          maxPolarAngle={Math.PI * 0.85}
-          minDistance={1.5}
-          maxDistance={4.0}
-        />
-
-        <CameraController view={view} />
-
-        <FadeIn delay={0} duration={0.5}>
-          <Stars />
-        </FadeIn>
-
-        <group rotation={[Math.PI * 0.13, Math.PI * -0.03, 0]}>
-          <FadeIn delay={0.3} duration={0.8}>
-            <Suspense fallback={null}>
-              <Earth meshRef={globeRef} />
-            </Suspense>
-          </FadeIn>
-
-          <Clouds />
-
-          <FadeIn delay={0.7} duration={0.6}>
-            <Atmosphere />
-          </FadeIn>
-
-          <FadeIn delay={1.2} duration={0.5}>
-            {locations.map((location, i) => (
-              <PinWithCard
-                key={location.id}
-                location={location}
-                index={i}
-                cardDelay={1.8 + i * 0.15}
-              />
-            ))}
-          </FadeIn>
-        </group>
+        <SceneContent view={view} />
       </Canvas>
     </div>
   );

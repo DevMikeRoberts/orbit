@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { Html, Line } from "@react-three/drei";
+import { useFrame, useThree } from "@react-three/fiber";
 import { latLngToVector3 } from "@/lib/geo";
 import type { Location } from "@/data/locations";
 
@@ -26,8 +27,8 @@ export function PinWithCard({
     const tangent = new THREE.Vector3().crossVectors(radial, up).normalize();
     if (tangent.length() < 0.001) tangent.set(1, 0, 0);
 
-    const spread = (index - 2) * 0.5;
-    const cardRadius = GLOBE_RADIUS * 1.06;
+    const spread = location.spread ?? (index - 1) * 0.7;
+    const cardRadius = GLOBE_RADIUS * 1.03;
     const baseCard = latLngToVector3(location.lat, location.lng, cardRadius);
     const card = baseCard.clone().add(tangent.clone().multiplyScalar(spread));
 
@@ -41,16 +42,27 @@ export function PinWithCard({
     const pts = c.getPoints(20);
 
     return { pinPos: pin, cardPos: card, points: pts };
-  }, [location.lat, location.lng, index]);
+  }, [location.lat, location.lng, index, location.spread]);
 
   const pinSize = PIN_SIZES[index % PIN_SIZES.length];
+  const diamondRef = useRef<THREE.Mesh>(null);
+  const { camera } = useThree();
+
+  useFrame(() => {
+    if (diamondRef.current) diamondRef.current.lookAt(camera.position);
+  });
+
+  const workEntries = location.subEntries.filter(e => e.company);
+  const otherEntries = location.subEntries.filter(e => !e.company);
+  const companies = [...new Set(workEntries.map(e => e.company!))];
+  const logo = workEntries.find(e => e.logo)?.logo;
 
   return (
     <group>
       <mesh position={pinPos}>
         <sphereGeometry args={[pinSize * 4, 8, 8]} />
         <meshBasicMaterial
-          color={location.color}
+          color="#3b82f6"
           transparent
           opacity={0.1}
           depthWrite={false}
@@ -60,7 +72,7 @@ export function PinWithCard({
       <mesh position={pinPos}>
         <sphereGeometry args={[pinSize * 2, 8, 8]} />
         <meshBasicMaterial
-          color={location.color}
+          color="#3b82f6"
           transparent
           opacity={0.25}
           depthWrite={false}
@@ -69,12 +81,12 @@ export function PinWithCard({
 
       <mesh position={pinPos}>
         <sphereGeometry args={[pinSize, 8, 8]} />
-        <meshBasicMaterial color={location.color} />
+        <meshBasicMaterial color="#3b82f6" />
       </mesh>
 
       <Line
         points={points}
-        color={location.color}
+        color="#3b82f6"
         transparent
         opacity={0.3}
         dashed
@@ -82,20 +94,72 @@ export function PinWithCard({
         gapSize={0.02}
       />
 
-      <Html position={cardPos} center distanceFactor={10}>
+      <mesh
+        ref={diamondRef}
+        position={cardPos}
+        rotation={[0, 0, Math.PI / 4]}
+      >
+        <circleGeometry args={[0.015, 4]} />
+        <meshBasicMaterial
+          color="#3b82f6"
+          transparent
+          opacity={0.6}
+          depthWrite={false}
+        />
+      </mesh>
+
+      <Html position={cardPos} center>
         <div
           className="card"
           style={{ animationDelay: `${cardDelay}s` }}
         >
           <span className="card-city">{location.city}</span>
-          <div className="card-inner">
-            <span className="card-emoji">{location.emoji}</span>
-            <div className="card-body">
-              <p className="card-role">{location.role}</p>
-              <span className="card-place">{location.place}</span>
-              <span className="card-date">{location.date}</span>
+
+          {companies.map(company => {
+            const entries = workEntries.filter(e => e.company === company);
+            const entryLogo = entries.find(e => e.logo)?.logo || logo;
+            return (
+              <div key={company} className="card-company-section">
+                {entryLogo ? (
+                  <div className="card-company-row">
+                    <img src={entryLogo} alt="" className="card-company-logo" />
+                    <span className="card-company-name">{company}</span>
+                  </div>
+                ) : (
+                  <span className="card-company-name">{company}</span>
+                )}
+                <div className="card-work-entries">
+                  <span className="card-work-title">
+                    worked as a{" "}
+                    <strong>
+                      {entries.length === 1
+                        ? entries[0].role
+                        : entries.length === 2
+                          ? `${entries[0].role} and ${entries[1].role}`
+                          : entries.map((e, i) =>
+                              i === entries.length - 1
+                                ? `and ${e.role}`
+                                : `${e.role}, `
+                            ).join("")}
+                    </strong>
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+
+          {otherEntries.map((entry, i) => (
+            <div key={i} className="card-sub-entry">
+              <div className="card-sub-header">
+                <span className="card-emoji">{entry.emoji}</span>
+                <div className="card-body">
+                  <p className="card-role">{entry.role}</p>
+                  <span className="card-place">{entry.place}</span>
+                  <span className="card-date">{entry.date}</span>
+                </div>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </Html>
     </group>

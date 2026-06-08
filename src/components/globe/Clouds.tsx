@@ -23,7 +23,7 @@ export function Clouds() {
       1,
     );
 
-    ref.current.rotation.y += delta * 0.015;
+    ref.current.rotation.y += delta * 0.003;
     const dist = camera.position.length();
     const distFade = THREE.MathUtils.clamp((dist - 1.5) / 1.0, 0, 1);
     mat.opacity = fadeIn * distFade * 0.2;
