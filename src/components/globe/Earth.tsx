@@ -16,8 +16,8 @@ export function Earth() {
       <meshStandardMaterial
         map={colorMap}
         emissiveMap={emissiveMap}
-        emissive="#b4c7e7"
-        emissiveIntensity={0.35}
+        emissive="#ffd27a"
+        emissiveIntensity={1.5}
         roughness={0.9}
         metalness={0}
       />
