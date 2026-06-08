@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { View } from "@/app/page";
 
 export function ContactOverlay({
@@ -10,22 +11,28 @@ export function ContactOverlay({
   onViewChange: (v: View) => void;
 }) {
   const open = view === "contact";
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setAnimate(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   return (
     <div
-      className={`fixed inset-0 z-20 transition-all duration-500 ease-out ${
+      className={`fixed inset-0 z-20 ${animate ? "transition-all duration-500 ease-out" : ""} ${
         open ? "pointer-events-auto" : "pointer-events-none"
       }`}
     >
       <div
-        className={`absolute inset-0 bg-black/30 transition-opacity duration-500 ${
+        className={`absolute inset-0 bg-black/30 ${animate ? "transition-opacity duration-500" : ""} ${
           open ? "opacity-100" : "opacity-0"
         }`}
         onClick={() => onViewChange("home")}
       />
 
       <div
-        className={`absolute bottom-0 left-0 right-0 flex flex-col items-center gap-6 px-6 pb-10 pt-8 rounded-t-2xl bg-white/[0.06] backdrop-blur-2xl border-t border-white/[0.08] transition-transform duration-500 ease-out ${
+        className={`absolute bottom-0 left-0 right-0 flex flex-col items-center gap-6 px-6 pb-10 pt-8 rounded-t-2xl bg-white/[0.06] backdrop-blur-2xl border-t border-white/[0.08] ${animate ? "transition-transform duration-500 ease-out" : ""} ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
       >
