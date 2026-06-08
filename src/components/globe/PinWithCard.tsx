@@ -62,7 +62,7 @@ export function PinWithCard({
       <mesh position={pinPos}>
         <sphereGeometry args={[pinSize * 4, 8, 8]} />
         <meshBasicMaterial
-          color="#fbbf24"
+          color="#ffffff"
           transparent
           opacity={0.1}
           depthWrite={false}
@@ -72,7 +72,7 @@ export function PinWithCard({
       <mesh position={pinPos}>
         <sphereGeometry args={[pinSize * 2, 8, 8]} />
         <meshBasicMaterial
-          color="#fbbf24"
+          color="#ffffff"
           transparent
           opacity={0.25}
           depthWrite={false}
@@ -81,12 +81,12 @@ export function PinWithCard({
 
       <mesh position={pinPos}>
         <sphereGeometry args={[pinSize, 8, 8]} />
-        <meshBasicMaterial color="#fbbf24" />
+        <meshBasicMaterial color="#ffffff" />
       </mesh>
 
       <Line
         points={points}
-        color="#fbbf24"
+        color="#ffffff"
         transparent
         opacity={0.3}
         dashed
@@ -101,7 +101,7 @@ export function PinWithCard({
       >
         <circleGeometry args={[0.015, 4]} />
         <meshBasicMaterial
-          color="#fbbf24"
+          color="#ffffff"
           transparent
           opacity={0.6}
           depthWrite={false}
