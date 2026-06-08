@@ -4,7 +4,7 @@ import { Suspense, useRef } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
+import { EffectComposer, Bloom, ToneMapping } from "@react-three/postprocessing";
 
 import { Earth } from "./Earth";
 import { Atmosphere } from "./Atmosphere";
@@ -104,16 +104,17 @@ export function GlobeScene({ view }: { view: View }) {
       <Canvas
         dpr={[1, 1.5]}
         camera={{ position: [-0.32, 0.63, 2.6], fov: 35 }}
-        gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1 }}
+        gl={{ antialias: true }}
       >
         <SceneContent view={view} />
-        <EffectComposer>
+        <EffectComposer multisampling={8}>
           <Bloom
             luminanceThreshold={0.6}
             luminanceSmoothing={0.9}
-            intensity={0.4}
+            intensity={0.35}
             mipmapBlur
           />
+          <ToneMapping mode={THREE.ACESFilmicToneMapping} />
         </EffectComposer>
       </Canvas>
     </div>
