@@ -18,9 +18,9 @@ export function Atmosphere() {
           varying vec3 vNormal;
           varying vec3 vPositionW;
           void main() {
-            vNormal = normalize(normalMatrix * normal);
             vec4 worldPos = modelMatrix * vec4(position, 1.0);
             vPositionW = worldPos.xyz;
+            vNormal = normalize((modelMatrix * vec4(normal, 0.0)).xyz);
             gl_Position = projectionMatrix * viewMatrix * worldPos;
           }
         `}
@@ -34,7 +34,7 @@ export function Atmosphere() {
             float rim = 0.85 - max(0.0, dot(vNormal, viewDir));
             float light = max(0.0, dot(vNormal, lightDir));
             float intensity = pow(max(0.0, rim), 4.0) * light;
-            gl_FragColor = vec4(0.35, 0.6, 1.0, intensity * 0.3);
+            gl_FragColor = vec4(0.35, 0.6, 1.0, intensity * 0.5);
           }
         `}
         transparent
