@@ -1,10 +1,20 @@
 "use client";
 
+import Link from "next/link";
 import type { View } from "@/app/page";
 
-const links: { label: string; view?: View; href?: string }[] = [
-  { label: "Resume", href: "/michael_roberts_resume.pdf" },
-  { label: "Projects" },
+interface NavLink {
+  label: string;
+  href?: string;
+  view?: View;
+  external?: boolean;
+}
+
+const links: NavLink[] = [
+  { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Chat", href: "/chat" },
+  { label: "Resume", href: "/michael_roberts_resume.pdf", external: true },
   { label: "Contact", view: "contact" },
 ];
 
@@ -25,7 +35,7 @@ export function Header({
       </button>
       <nav className="flex items-center gap-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-xl border border-white/[0.06]">
         {links.map((link) =>
-          link.href ? (
+          link.href && link.external ? (
             <a
               key={link.label}
               href={link.href}
@@ -35,6 +45,14 @@ export function Header({
             >
               {link.label}
             </a>
+          ) : link.href ? (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="rounded-full px-3 py-1.5 text-xs font-medium text-white/70 transition-colors hover:text-white hover:bg-white/10"
+            >
+              {link.label}
+            </Link>
           ) : link.view ? (
             <button
               key={link.label}
@@ -47,14 +65,7 @@ export function Header({
             >
               {link.label}
             </button>
-          ) : (
-            <span
-              key={link.label}
-              className="rounded-full px-3 py-1.5 text-xs font-medium text-white/30 cursor-default"
-            >
-              {link.label}
-            </span>
-          ),
+          ) : null,
         )}
       </nav>
     </header>

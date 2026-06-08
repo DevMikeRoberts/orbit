@@ -11,7 +11,6 @@ import { Stars } from "./Stars";
 import { Clouds } from "./Clouds";
 import { PinWithCard } from "./PinWithCard";
 import { HaloRing } from "./HaloRing";
-import { LivePin } from "./LivePin";
 import { FadeIn } from "./FadeIn";
 import { locations } from "@/data/locations";
 import { useKonami } from "@/context/KonamiContext";
@@ -90,7 +89,6 @@ function SceneContent({ view }: { view: View }) {
               cardDelay={1.8 + i * 0.15}
             />
           ))}
-          <LivePin lat={33.749} lng={-84.388} />
         </FadeIn>
       </group>
     </>
