@@ -27,7 +27,7 @@ export function LivePin({
     <group>
       <mesh position={pos}>
         <sphereGeometry args={[0.003, 8, 8]} />
-        <meshBasicMaterial color="#22c55e" />
+        <meshBasicMaterial color="#fbbf24" />
       </mesh>
 
       <Html position={cardPos} center>
