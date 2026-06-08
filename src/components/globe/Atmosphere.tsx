@@ -31,10 +31,10 @@ export function Atmosphere() {
           void main() {
             vec3 viewDir = normalize(cameraPosition - vPositionW);
             vec3 lightDir = normalize(lightPos - vPositionW);
-            float rim = 0.72 - max(0.0, dot(vNormal, viewDir));
+            float rim = 0.85 - max(0.0, dot(vNormal, viewDir));
             float light = max(0.0, dot(vNormal, lightDir));
-            float intensity = pow(max(0.0, rim), 3.0) * (0.05 + 0.95 * light);
-            gl_FragColor = vec4(0.35, 0.6, 1.0, intensity * 0.4);
+            float intensity = pow(max(0.0, rim), 4.0) * light;
+            gl_FragColor = vec4(0.35, 0.6, 1.0, intensity * 0.3);
           }
         `}
         transparent

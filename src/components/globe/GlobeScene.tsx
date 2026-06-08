@@ -41,7 +41,7 @@ function SceneContent({ view }: { view: View }) {
 
   return (
     <>
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0} />
       <directionalLight
         position={[0, 0.5, 5]}
         intensity={6}
