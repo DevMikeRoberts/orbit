@@ -4,7 +4,7 @@ import type { View } from "@/app/page";
 
 const links: { label: string; view?: View; href?: string }[] = [
   { label: "Resume", href: "/michael_roberts_resume.pdf" },
-  { label: "Projects" },
+  { label: "Projects", view: "projects" },
   { label: "Contact", view: "contact" },
 ];
 

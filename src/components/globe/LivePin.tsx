@@ -3,7 +3,6 @@
 import { useMemo } from "react";
 import { Html } from "@react-three/drei";
 import { latLngToVector3 } from "@/lib/geo";
-import meSrc from "../../../public/me.png";
 
 const GLOBE_RADIUS = 1;
 
@@ -30,6 +29,10 @@ export function LivePin({
         <meshBasicMaterial color="#22c55e" />
       </mesh>
 
+      <Html position={pos} center style={{ pointerEvents: "none" }}>
+        <span className="live-globe-pin">📍</span>
+      </Html>
+
       <Html position={cardPos} center>
         <div className="live-pin">
           <div className="live-avatar-wrapper">
@@ -37,12 +40,12 @@ export function LivePin({
             <div className="live-ping-ring live-ping-ring--delay" />
             <div
               className="live-avatar"
-              style={{ backgroundImage: `url(${meSrc.src})` }}
+              style={{ backgroundImage: "url(/me.png)" }}
             />
-            <span className="live-pin-emoji">📍</span>
           </div>
           <div className="live-text-bubble">
-            <span className="live-subtitle">currently in</span><span className="live-city">&nbsp;Atlanta, Georgia</span>
+            <span className="live-subtitle">currently in</span>
+            <span className="live-city">&nbsp;Atlanta, Georgia</span>
           </div>
         </div>
       </Html>

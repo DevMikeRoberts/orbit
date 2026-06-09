@@ -9,26 +9,30 @@ export function Atmosphere() {
   const ref = useRef<THREE.Mesh>(null);
 
   return (
-    <mesh ref={ref} scale={[1.015, 1.015, 1.015]}>
-      <sphereGeometry args={[GLOBE_RADIUS, 48, 48]} />
+    <mesh ref={ref} scale={[1.025, 1.025, 1.025]}>
+      <sphereGeometry args={[GLOBE_RADIUS, 64, 64]} />
       <shaderMaterial
         vertexShader={`
-          varying vec3 vNormal;
+          varying vec3 vNormalW;
           varying vec3 vPositionW;
           void main() {
-            vNormal = normalize(normalMatrix * normal);
             vec4 worldPos = modelMatrix * vec4(position, 1.0);
+            vNormalW = normalize(mat3(modelMatrix) * normal);
             vPositionW = worldPos.xyz;
             gl_Position = projectionMatrix * viewMatrix * worldPos;
           }
         `}
         fragmentShader={`
-          varying vec3 vNormal;
+          varying vec3 vNormalW;
           varying vec3 vPositionW;
           void main() {
             vec3 viewDir = normalize(cameraPosition - vPositionW);
-            float intensity = pow(0.72 - dot(vNormal, viewDir), 3.0);
-            gl_FragColor = vec4(0.35, 0.6, 1.0, intensity * 0.4);
+            float rim = 1.0 - max(dot(vNormalW, viewDir), 0.0);
+            float glow = pow(rim, 2.4);
+            vec3 inner = vec3(0.35, 0.55, 1.0);
+            vec3 outer = vec3(0.55, 0.75, 1.0);
+            vec3 col = mix(inner, outer, smoothstep(0.4, 1.0, rim));
+            gl_FragColor = vec4(col, glow * 0.55);
           }
         `}
         transparent

@@ -10,6 +10,13 @@ import type { Location } from "@/data/locations";
 const GLOBE_RADIUS = 1;
 const PIN_SIZES = [0.002, 0.003, 0.0015, 0.0025, 0.002];
 
+function formatRoles(roles: string[]) {
+  if (roles.length === 0) return "";
+  if (roles.length === 1) return roles[0];
+  if (roles.length === 2) return `${roles[0]} and ${roles[1]}`;
+  return `${roles.slice(0, -1).join(", ")}, and ${roles[roles.length - 1]}`;
+}
+
 export function PinWithCard({
   location,
   index,
@@ -39,7 +46,7 @@ export function PinWithCard({
       .multiplyScalar(GLOBE_RADIUS * 1.03);
 
     const c = new THREE.QuadraticBezierCurve3(pin, m, card);
-    const pts = c.getPoints(20);
+    const pts = c.getPoints(24);
 
     return { pinPos: pin, cardPos: card, points: pts };
   }, [location.lat, location.lng, index, location.spread]);
@@ -49,18 +56,18 @@ export function PinWithCard({
   const { camera } = useThree();
 
   useFrame(() => {
-    if (diamondRef.current) diamondRef.current.lookAt(camera.position);
+    if (diamondRef.current) diamondRef.current.quaternion.copy(camera.quaternion);
   });
 
-  const workEntries = location.subEntries.filter(e => e.company);
-  const otherEntries = location.subEntries.filter(e => !e.company);
-  const companies = [...new Set(workEntries.map(e => e.company!))];
-  const logo = workEntries.find(e => e.logo)?.logo;
+  const workEntries = location.subEntries.filter((e) => e.company);
+  const otherEntries = location.subEntries.filter((e) => !e.company);
+  const companies = [...new Set(workEntries.map((e) => e.company!))];
+  const fallbackLogo = workEntries.find((e) => e.logo)?.logo;
 
   return (
     <group>
       <mesh position={pinPos}>
-        <sphereGeometry args={[pinSize * 4, 8, 8]} />
+        <sphereGeometry args={[pinSize * 4, 12, 12]} />
         <meshBasicMaterial
           color="#3b82f6"
           transparent
@@ -70,7 +77,7 @@ export function PinWithCard({
       </mesh>
 
       <mesh position={pinPos}>
-        <sphereGeometry args={[pinSize * 2, 8, 8]} />
+        <sphereGeometry args={[pinSize * 2, 12, 12]} />
         <meshBasicMaterial
           color="#3b82f6"
           transparent
@@ -80,28 +87,25 @@ export function PinWithCard({
       </mesh>
 
       <mesh position={pinPos}>
-        <sphereGeometry args={[pinSize, 8, 8]} />
-        <meshBasicMaterial color="#3b82f6" />
+        <sphereGeometry args={[pinSize, 12, 12]} />
+        <meshBasicMaterial color="#60a5fa" />
       </mesh>
 
       <Line
         points={points}
-        color="#3b82f6"
+        color="#60a5fa"
         transparent
-        opacity={0.3}
+        opacity={0.35}
         dashed
         dashSize={0.025}
         gapSize={0.02}
+        lineWidth={1.2}
       />
 
-      <mesh
-        ref={diamondRef}
-        position={cardPos}
-        rotation={[0, 0, Math.PI / 4]}
-      >
+      <mesh ref={diamondRef} position={cardPos}>
         <circleGeometry args={[0.015, 4]} />
         <meshBasicMaterial
-          color="#3b82f6"
+          color="#60a5fa"
           transparent
           opacity={0.6}
           depthWrite={false}
@@ -109,19 +113,17 @@ export function PinWithCard({
       </mesh>
 
       <Html position={cardPos} center>
-        <div
-          className="card"
-          style={{ animationDelay: `${cardDelay}s` }}
-        >
+        <div className="card" style={{ animationDelay: `${cardDelay}s` }}>
           <span className="card-city">{location.city}</span>
 
-          {companies.map(company => {
-            const entries = workEntries.filter(e => e.company === company);
-            const entryLogo = entries.find(e => e.logo)?.logo || logo;
+          {companies.map((company) => {
+            const entries = workEntries.filter((e) => e.company === company);
+            const entryLogo = entries.find((e) => e.logo)?.logo || fallbackLogo;
             return (
               <div key={company} className="card-company-section">
                 {entryLogo ? (
                   <div className="card-company-row">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={entryLogo} alt="" className="card-company-logo" />
                     <span className="card-company-name">{company}</span>
                   </div>
@@ -131,17 +133,7 @@ export function PinWithCard({
                 <div className="card-work-entries">
                   <span className="card-work-title">
                     worked as a{" "}
-                    <strong>
-                      {entries.length === 1
-                        ? entries[0].role
-                        : entries.length === 2
-                          ? `${entries[0].role} and ${entries[1].role}`
-                          : entries.map((e, i) =>
-                              i === entries.length - 1
-                                ? `and ${e.role}`
-                                : `${e.role}, `
-                            ).join("")}
-                    </strong>
+                    <strong>{formatRoles(entries.map((e) => e.role))}</strong>
                   </span>
                 </div>
               </div>
