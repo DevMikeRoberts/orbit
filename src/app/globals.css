@@ -231,7 +231,7 @@ body {
 
 .live-globe-pin {
   display: block;
-  font-size: 1.4rem;
+  font-size: 2.8rem;
   line-height: 1;
   /* push up so the emoji's tip lands on Atlanta rather than its center */
   transform: translateY(-45%);
