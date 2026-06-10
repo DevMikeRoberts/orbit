@@ -15,10 +15,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Orbit — Michael",
+  title: "Orbit — Michael Roberts",
   description: "Software engineer, builder, and lifelong learner.",
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👋</text></svg>",
+  },
+  metadataBase: new URL("https://orbitfolio.dev"),
+  openGraph: {
+    title: "Michael Roberts — Orbit",
+    description: "Software engineer, builder, and lifelong learner.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Michael Roberts — Orbit",
+    description: "Software engineer, builder, and lifelong learner.",
   },
 };
 
