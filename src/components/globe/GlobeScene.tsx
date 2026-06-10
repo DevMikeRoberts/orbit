@@ -83,13 +83,13 @@ function SceneContent({ view }: { view: View }) {
 
         <HaloRing />
 
-        <FadeIn delay={0.7} duration={0.4}>
+        <FadeIn delay={1.2} duration={0.5}>
           {locations.map((location, i) => (
             <PinWithCard
               key={location.id}
               location={location}
               index={i}
-              cardDelay={0.9 + i * 0.08}
+              cardDelay={1.8 + i * 0.15}
             />
           ))}
           <LivePin lat={33.749} lng={-84.388} />

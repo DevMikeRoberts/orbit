@@ -36,7 +36,7 @@ body {
   min-width: 200px;
   max-width: 320px;
   opacity: 0;
-  animation: cardEnter 0.45s ease-out forwards;
+  animation: cardEnter 0.6s ease-out forwards;
   pointer-events: none;
   position: relative;
 }
@@ -231,7 +231,7 @@ body {
 
 .live-globe-pin {
   display: block;
-  font-size: 2.8rem;
+  font-size: 5.6rem;
   line-height: 1;
   /* push up so the emoji's tip lands on Atlanta rather than its center */
   transform: translateY(-45%);
