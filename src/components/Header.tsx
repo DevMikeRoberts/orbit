@@ -2,7 +2,7 @@
 
 import type { View } from "@/app/page";
 
-const links: { label: string; view?: View; href?: string }[] = [
+const NAV_LINKS: { label: string; view?: View; href?: string }[] = [
   { label: "Resume", href: "/michael_roberts_resume.pdf" },
   { label: "Projects", view: "projects" },
   { label: "Contact", view: "contact" },
@@ -11,17 +11,25 @@ const links: { label: string; view?: View; href?: string }[] = [
 export function Header({
   view,
   onViewChange,
+  handle = "@devmikeroberts",
+  resumeUrl,
 }: {
   view: View;
   onViewChange: (v: View) => void;
+  handle?: string;
+  resumeUrl?: string;
 }) {
+  const links = resumeUrl
+    ? [{ label: "Resume", href: resumeUrl }, ...NAV_LINKS.slice(1)]
+    : NAV_LINKS;
+
   return (
     <header className="fixed top-0 left-0 right-0 z-10 flex items-center justify-between px-6 py-3">
       <button
         onClick={() => onViewChange("home")}
         className="text-sm font-semibold tracking-tight text-white/60 transition-colors hover:text-white"
       >
-        @devmikeroberts
+        {handle}
       </button>
       <nav className="flex items-center gap-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-xl border border-white/[0.06]">
         {links.map((link) =>
@@ -47,14 +55,7 @@ export function Header({
             >
               {link.label}
             </button>
-          ) : (
-            <span
-              key={link.label}
-              className="rounded-full px-3 py-1.5 text-xs font-medium text-white/30 cursor-default"
-            >
-              {link.label}
-            </span>
-          ),
+          ) : null,
         )}
       </nav>
     </header>
