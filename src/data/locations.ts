@@ -1,13 +1,30 @@
-import type { ProfileLocation } from '@/types/profile';
+export interface SubEntry {
+  emoji: string;
+  role: string;
+  company?: string;
+  logo?: string;
+  place: string;
+  description: string;
+  date: string;
+}
 
-export const locations: ProfileLocation[] = [
+export interface Location {
+  id: string;
+  city: string;
+  lat: number;
+  lng: number;
+  color: string;
+  subEntries: SubEntry[];
+  spread?: number;
+}
+
+export const locations: Location[] = [
   {
     id: "atlanta",
     city: "Atlanta",
     lat: 33.749,
     lng: -84.388,
     color: "#60a5fa",
-    connectionType: "live",
     subEntries: [
       {
         emoji: "🏗️",
@@ -35,7 +52,6 @@ export const locations: ProfileLocation[] = [
     lat: 37.774,
     lng: -122.419,
     color: "#34d399",
-    connectionType: "worked",
     subEntries: [
       {
         emoji: "💼",
@@ -65,7 +81,6 @@ export const locations: ProfileLocation[] = [
     lat: 34.001,
     lng: -81.035,
     color: "#f97316",
-    connectionType: "born",
     spread: 1.0,
     subEntries: [
       {
@@ -84,7 +99,6 @@ export const locations: ProfileLocation[] = [
     lat: 35.676,
     lng: 139.65,
     color: "#e879f9",
-    connectionType: "travel",
     spread: 0.4,
     subEntries: [
       {

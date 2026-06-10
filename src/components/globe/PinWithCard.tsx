@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { Html, Line } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { latLngToVector3 } from "@/lib/geo";
-import type { ProfileLocation, SubEntry } from "@/types/profile";
+import type { Location } from "@/data/locations";
 
 const GLOBE_RADIUS = 1;
 const PIN_SIZES = [0.002, 0.003, 0.0015, 0.0025, 0.002];
@@ -22,7 +22,7 @@ export function PinWithCard({
   index,
   cardDelay = 0,
 }: {
-  location: ProfileLocation;
+  location: Location;
   index: number;
   cardDelay?: number;
 }) {
@@ -59,10 +59,10 @@ export function PinWithCard({
     if (diamondRef.current) diamondRef.current.quaternion.copy(camera.quaternion);
   });
 
-  const workEntries = location.subEntries.filter((e: SubEntry) => e.company);
-  const otherEntries = location.subEntries.filter((e: SubEntry) => !e.company);
-  const companies = [...new Set(workEntries.map((e: SubEntry) => e.company!))];
-  const fallbackLogo = workEntries.find((e: SubEntry) => e.logo)?.logo;
+  const workEntries = location.subEntries.filter((e) => e.company);
+  const otherEntries = location.subEntries.filter((e) => !e.company);
+  const companies = [...new Set(workEntries.map((e) => e.company!))];
+  const fallbackLogo = workEntries.find((e) => e.logo)?.logo;
 
   return (
     <group>
@@ -116,9 +116,9 @@ export function PinWithCard({
         <div className="card" style={{ animationDelay: `${cardDelay}s` }}>
           <span className="card-city">{location.city}</span>
 
-          {companies.map((company: string) => {
-            const entries = workEntries.filter((e: SubEntry) => e.company === company);
-            const entryLogo = entries.find((e: SubEntry) => e.logo)?.logo || fallbackLogo;
+          {companies.map((company) => {
+            const entries = workEntries.filter((e) => e.company === company);
+            const entryLogo = entries.find((e) => e.logo)?.logo || fallbackLogo;
             return (
               <div key={company} className="card-company-section">
                 {entryLogo ? (
@@ -133,14 +133,14 @@ export function PinWithCard({
                 <div className="card-work-entries">
                   <span className="card-work-title">
                     worked as a{" "}
-                    <strong>{formatRoles(entries.map((e: SubEntry) => e.role))}</strong>
+                    <strong>{formatRoles(entries.map((e) => e.role))}</strong>
                   </span>
                 </div>
               </div>
             );
           })}
 
-          {otherEntries.map((entry: SubEntry, i: number) => (
+          {otherEntries.map((entry, i) => (
             <div key={i} className="card-sub-entry">
               <div className="card-sub-header">
                 <span className="card-emoji">{entry.emoji}</span>

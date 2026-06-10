@@ -2,14 +2,14 @@
 
 import type { View } from "@/app/page";
 
+const EMAIL = "hello@m-roberts.com";
+
 export function ContactOverlay({
   view,
   onViewChange,
-  email,
 }: {
   view: View;
   onViewChange: (v: View) => void;
-  email: string;
 }) {
   const open = view === "contact";
 
@@ -34,8 +34,8 @@ export function ContactOverlay({
         </button>
 
         <div className="contact-mega">
-          <a href={`mailto:${email}`} className="contact-mega-email">
-            {email}
+          <a href={`mailto:${EMAIL}`} className="contact-mega-email">
+            {EMAIL}
           </a>
         </div>
       </aside>

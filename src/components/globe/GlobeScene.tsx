@@ -13,19 +13,11 @@ import { PinWithCard } from "./PinWithCard";
 import { HaloRing } from "./HaloRing";
 import { LivePin } from "./LivePin";
 import { FadeIn } from "./FadeIn";
+import { locations } from "@/data/locations";
 import { useKonami } from "@/context/KonamiContext";
 import type { View } from "@/app/page";
-import type { ProfileLocation } from "@/types/profile";
 
-function SceneContent({
-  view,
-  locations,
-  liveLocation,
-}: {
-  view: View;
-  locations: ProfileLocation[];
-  liveLocation?: { lat: number; lng: number };
-}) {
+function SceneContent({ view }: { view: View }) {
   const globeGroupRef = useRef<THREE.Group>(null);
   const spinProgress = useRef(0);
   const { activated } = useKonami();
@@ -100,24 +92,14 @@ function SceneContent({
               cardDelay={1.8 + i * 0.15}
             />
           ))}
-          {liveLocation && (
-            <LivePin lat={liveLocation.lat} lng={liveLocation.lng} />
-          )}
+          <LivePin lat={33.749} lng={-84.388} />
         </FadeIn>
       </group>
     </>
   );
 }
 
-export function GlobeScene({
-  view,
-  locations,
-  liveLocation,
-}: {
-  view: View;
-  locations: ProfileLocation[];
-  liveLocation?: { lat: number; lng: number };
-}) {
+export function GlobeScene({ view }: { view: View }) {
   return (
     <div className="fixed inset-0">
       <Canvas
@@ -130,7 +112,7 @@ export function GlobeScene({
           powerPreference: "high-performance",
         }}
       >
-        <SceneContent view={view} locations={locations} liveLocation={liveLocation} />
+        <SceneContent view={view} />
       </Canvas>
     </div>
   );
