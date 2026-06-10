@@ -18,26 +18,28 @@ export function Clouds() {
 
     if (startTime.current === null) startTime.current = clock.getElapsedTime();
     const fadeIn = THREE.MathUtils.clamp(
-      (clock.getElapsedTime() - startTime.current) / 0.6,
+      (clock.getElapsedTime() - startTime.current) / 0.8,
       0,
       1,
     );
 
-    ref.current.rotation.y += delta * 0.003;
+    ref.current.rotation.y += delta * 0.005;
     const dist = camera.position.length();
-    const distFade = THREE.MathUtils.clamp((dist - 1.5) / 1.0, 0, 1);
-    mat.opacity = fadeIn * distFade * 0.2;
+    const distFade = THREE.MathUtils.smoothstep(dist, 1.6, 2.6);
+    mat.opacity = fadeIn * distFade * 0.22;
   });
 
   return (
     <mesh ref={ref}>
-      <sphereGeometry args={[1.008, 48, 48]} />
+      <sphereGeometry args={[1.006, 96, 96]} />
       <meshBasicMaterial
         map={cloudMap}
         transparent
         opacity={0}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
+        // Opt out of FadeIn's per-frame opacity stomp.
+        userData={{ skipFade: true }}
       />
     </mesh>
   );

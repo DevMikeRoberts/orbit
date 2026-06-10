@@ -26,25 +26,27 @@ function SceneContent({ view }: { view: View }) {
   useFrame((_, delta) => {
     if (!globeGroupRef.current) return;
 
-    if (activated && spinProgress.current < 1) {
-      spinProgress.current = Math.min(1, spinProgress.current + delta * 1.5);
-      globeGroupRef.current.rotation.y += delta * 8 * (1 - spinProgress.current);
-    }
-
-    if (activated && !didLog.current) {
-      didLog.current = true;
-      console.log("117");
-      console.log("Finish the Fight");
+    if (activated) {
+      if (spinProgress.current < 1) {
+        spinProgress.current = Math.min(1, spinProgress.current + delta * 1.5);
+        globeGroupRef.current.rotation.y += delta * 8 * (1 - spinProgress.current);
+      }
+      if (!didLog.current) {
+        didLog.current = true;
+        console.log("117");
+        console.log("Finish the Fight");
+      }
     }
   });
 
   return (
     <>
-      <ambientLight intensity={1.0} />
+      <ambientLight intensity={0.55} color="#cfd9ff" />
+      <hemisphereLight args={["#bccfff", "#10131f", 0.6]} />
       <directionalLight
-        position={[0, 0.5, 5]}
-        intensity={12.0}
-        color="#ffffff"
+        position={[2.5, 1.2, 4]}
+        intensity={3.2}
+        color="#fff4e6"
       />
 
       <OrbitControls
@@ -53,15 +55,17 @@ function SceneContent({ view }: { view: View }) {
         enablePan={false}
         enableZoom={view === "home"}
         enableRotate={view === "home"}
+        enableDamping
+        dampingFactor={0.08}
+        rotateSpeed={0.55}
+        zoomSpeed={0.6}
         minPolarAngle={0.1}
         maxPolarAngle={Math.PI * 0.85}
         minDistance={2.0}
         maxDistance={4.0}
       />
 
-      <FadeIn delay={0} duration={0.5}>
-        <Stars />
-      </FadeIn>
+      <Stars />
 
       <group
         ref={globeGroupRef}
@@ -75,9 +79,7 @@ function SceneContent({ view }: { view: View }) {
 
         <Clouds />
 
-        <FadeIn delay={0.7} duration={0.6}>
-          <Atmosphere />
-        </FadeIn>
+        <Atmosphere />
 
         <HaloRing />
 
@@ -101,9 +103,14 @@ export function GlobeScene({ view }: { view: View }) {
   return (
     <div className="fixed inset-0">
       <Canvas
-        dpr={[1, 1.5]}
+        dpr={[1, 2]}
         camera={{ position: [-0.32, 0.63, 2.6], fov: 35 }}
-        gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1 }}
+        gl={{
+          antialias: true,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.2,
+          powerPreference: "high-performance",
+        }}
       >
         <SceneContent view={view} />
       </Canvas>
