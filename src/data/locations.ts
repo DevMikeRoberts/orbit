@@ -89,7 +89,7 @@ export const locations: Location[] = [
         place: "Columbia, SC",
         description:
           "Born in the Palmetto State.",
-        date: "1998",
+        date: "2000",
       },
     ],
   },
