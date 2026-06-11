@@ -2,7 +2,7 @@
 
 import type { View } from "@/app/page";
 
-const EMAIL = "hello@m-roberts.com";
+const EMAIL = "mikerobs238@hotmail.com";
 
 export function ContactOverlay({
   view,
