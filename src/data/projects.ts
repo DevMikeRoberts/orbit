@@ -16,24 +16,27 @@ export const projects: Project[] = [
     accent: "#1e40af",
   },
   {
-    title: "Coming soon",
-    blurb: "More on the way.",
-    github: null,
-    tags: [],
-    accent: "#3b82f6",
+    title: "Topsters",
+    blurb:
+      "A drag-and-drop chart maker for albums, books, and games. Arrange cover art in a grid, label entries, and export a shareable image — runs entirely in the browser with no account required.",
+    github: "https://github.com/DevMikeRoberts/topstersorg",
+    tags: ["Vue", "JavaScript"],
+    accent: "#059669",
   },
   {
-    title: "Coming soon",
-    blurb: "More on the way.",
-    github: null,
-    tags: [],
-    accent: "#60a5fa",
+    title: "BG Strip",
+    blurb:
+      "A zero-install, fully client-side background remover. Drop in a photo, an ONNX segmentation model removes the background on-device, and you download a transparent PNG — your image never leaves your machine.",
+    github: "https://github.com/DevMikeRoberts/ai-background-remover",
+    tags: ["HTML", "ONNX", "WebAssembly"],
+    accent: "#7c3aed",
   },
   {
-    title: "Coming soon",
-    blurb: "More on the way.",
-    github: null,
-    tags: [],
-    accent: "#93c5fd",
+    title: "Project Zelda",
+    blurb:
+      "An 8-bit top-down dungeon crawler built in Unity for a university CS course — custom sprite sheets, tile-based collision maps, enemy AI, and an inventory system.",
+    github: "https://github.com/DevMikeRoberts/project_zelda",
+    tags: ["C#", "Unity"],
+    accent: "#b45309",
   },
 ];
