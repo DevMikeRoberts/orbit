@@ -16,14 +16,6 @@ export const projects: Project[] = [
     accent: "#1e40af",
   },
   {
-    title: "Topsters",
-    blurb:
-      "A drag-and-drop chart maker for albums, books, and games. Arrange cover art in a grid, label entries, and export a shareable image — runs entirely in the browser with no account required.",
-    github: "https://github.com/DevMikeRoberts/topstersorg",
-    tags: ["Vue", "JavaScript"],
-    accent: "#059669",
-  },
-  {
     title: "BG Strip",
     blurb:
       "A zero-install, fully client-side background remover. Drop in a photo, an ONNX segmentation model removes the background on-device, and you download a transparent PNG — your image never leaves your machine.",
