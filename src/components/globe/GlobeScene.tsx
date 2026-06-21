@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useRef } from "react";
+import { Suspense, useRef, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
@@ -100,11 +100,18 @@ function SceneContent({ view }: { view: View }) {
 }
 
 export function GlobeScene({ view }: { view: View }) {
+  const [initialZ] = useState(() => {
+    if (typeof window === "undefined") return 2.6;
+    const w = window.innerWidth;
+    if (w >= 768) return 2.6;
+    return Math.min(2.6 + ((768 - w) / 768) * 1.4, 3.8);
+  });
+
   return (
     <div className="fixed inset-0">
       <Canvas
         dpr={[1, 2]}
-        camera={{ position: [-0.32, 0.63, 2.6], fov: 35 }}
+        camera={{ position: [-0.32, 0.63, initialZ], fov: 35 }}
         gl={{
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
