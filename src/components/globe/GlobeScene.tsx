@@ -62,7 +62,7 @@ function SceneContent({ view }: { view: View }) {
         minPolarAngle={0.1}
         maxPolarAngle={Math.PI * 0.85}
         minDistance={2.0}
-        maxDistance={4.0}
+        maxDistance={5.0}
       />
 
       <Stars />
@@ -103,8 +103,8 @@ export function GlobeScene({ view }: { view: View }) {
   const [initialZ] = useState(() => {
     if (typeof window === "undefined") return 2.6;
     const w = window.innerWidth;
-    if (w >= 768) return 2.6;
-    return Math.min(2.6 + ((768 - w) / 768) * 1.4, 3.8);
+    if (w >= 900) return 2.6;
+    return Math.min(2.6 + ((900 - w) / 900) * 2.4, 4.8);
   });
 
   return (

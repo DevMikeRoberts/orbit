@@ -16,7 +16,7 @@ export function Header({
   onViewChange: (v: View) => void;
 }) {
   return (
-    <header className="fixed top-0 left-0 right-0 z-10 flex items-center justify-between px-6 py-3">
+    <header className="fixed top-0 left-0 right-0 z-10 flex items-center justify-between px-3 py-3 sm:px-6">
       <button
         onClick={() => onViewChange("home")}
         className="text-sm font-semibold tracking-tight text-white/60 transition-colors hover:text-white"
@@ -31,7 +31,7 @@ export function Header({
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full px-3 py-1.5 text-xs font-medium text-white/70 transition-colors hover:text-white hover:bg-white/10"
+              className="rounded-full px-2 py-1.5 text-xs font-medium text-white/70 transition-colors hover:text-white hover:bg-white/10 sm:px-3"
             >
               {link.label}
             </a>
@@ -39,7 +39,7 @@ export function Header({
             <button
               key={link.label}
               onClick={() => onViewChange(link.view!)}
-              className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+              className={`rounded-full px-2 py-1.5 text-xs font-medium transition-colors sm:px-3 ${
                 view === link.view
                   ? "text-white bg-white/15"
                   : "text-white/70 hover:text-white hover:bg-white/10"
@@ -50,7 +50,7 @@ export function Header({
           ) : (
             <span
               key={link.label}
-              className="rounded-full px-3 py-1.5 text-xs font-medium text-white/30 cursor-default"
+              className="rounded-full px-2 py-1.5 text-xs font-medium text-white/30 cursor-default sm:px-3"
             >
               {link.label}
             </span>
