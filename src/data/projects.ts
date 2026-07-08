@@ -31,4 +31,12 @@ export const projects: Project[] = [
     tags: ["C#", "Unity"],
     accent: "#b45309",
   },
+  {
+    title: "Orbit App",
+    blurb:
+      "A full-featured React Native mobile app — smooth cross-platform navigation, real-time data sync, and a polished UI that feels at home on both iOS and Android.",
+    github: "https://github.com/DevMikeRoberts/orbit-app",
+    tags: ["React Native", "TypeScript", "Expo"],
+    accent: "#0d9488",
+  },
 ];
