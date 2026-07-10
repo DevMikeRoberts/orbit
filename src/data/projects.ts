@@ -31,4 +31,12 @@ export const projects: Project[] = [
     tags: ["C#", "Unity"],
     accent: "#b45309",
   },
+  {
+    title: "Orbitfolio",
+    blurb:
+      "A reusable portfolio platform for creating interactive 3D globe portfolios — the same tech that powers this site, packaged as a deployable template.",
+    github: "https://github.com/DevMikeRoberts/orbit-app",
+    tags: ["Next.js", "Three.js", "TypeScript"],
+    accent: "#059669",
+  },
 ];
