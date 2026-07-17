@@ -8,11 +8,11 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: "Orbit",
+    title: "Vibe Kanban",
     blurb:
-      "This very portfolio — a hand-shaded 3D globe with biographical pins, custom GLSL star streaks on camera drag, and a city-light night side.",
-    github: "https://github.com/devmikeroberts/orbit",
-    tags: ["Next.js", "Three.js", "GLSL", "React 19"],
+      "A Kanban board built for orchestrating AI coding agents — plan, queue, and review agent-driven tasks across a project with a fast, drag-and-drop workflow.",
+    github: "https://github.com/DevMikeRoberts/vibe-kanban",
+    tags: ["React", "TypeScript", "Rust", "Tauri"],
     accent: "#1e40af",
   },
   {

@@ -8,12 +8,12 @@ describe("ProjectsOverlay", () => {
     expect(screen.getByRole("heading", { level: 2 })).toBeInTheDocument();
   });
 
-  it("renders the Orbit project card", () => {
+  it("renders the Vibe Kanban project card", () => {
     render(<ProjectsOverlay view="projects" onViewChange={() => {}} />);
-    expect(screen.getByText("Orbit")).toBeInTheDocument();
+    expect(screen.getByText("Vibe Kanban")).toBeInTheDocument();
   });
 
-  it("links Orbit card to GitHub", () => {
+  it("links Vibe Kanban card to GitHub", () => {
     render(<ProjectsOverlay view="projects" onViewChange={() => {}} />);
     const links = screen
       .getAllByRole("link")
