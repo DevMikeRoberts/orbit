@@ -8,12 +8,12 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: "Orbit",
+    title: "Vibe Board",
     blurb:
-      "This very portfolio — a hand-shaded 3D globe with biographical pins, custom GLSL star streaks on camera drag, and a city-light night side.",
-    github: "https://github.com/devmikeroberts/orbit",
-    tags: ["Next.js", "Three.js", "GLSL", "React 19"],
-    accent: "#1e40af",
+      "Drag-and-drop Kanban board that delegates coding tasks to AI agents — GitHub Copilot, Claude Code, OpenAI Codex, and OpenCode — with real-time streaming, task groups, and git worktree isolation.",
+    github: "https://github.com/DevMikeRoberts/vibe-board",
+    tags: ["TypeScript", "React", "AI Agents", "Git Worktrees"],
+    accent: "#7c3aed",
   },
   {
     title: "BG Strip",
