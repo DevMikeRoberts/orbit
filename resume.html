@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Michael Roberts - Resume</title>
+  <style>
+    @page {
+      size: letter;
+      margin: 0.75in 0.75in 0.75in 0.75in;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #1b294a;
+      font-size: 20pt;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .container {
+      max-width: 8.5in;
+      margin: 0 auto;
+    }
+    .header {
+      text-align: left;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #1b294a;
+    }
+    .name {
+      font-size: 36pt;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      color: #1b294a;
+    }
+    .name .initial {
+      color: #1b294a;
+    }
+    .contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 2rem;
+      margin-top: 0.75rem;
+      font-size: 18pt;
+      color: #1b294a;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+    }
+    .contact-separator {
+      color: #1b294a;
+      opacity: 0.5;
+    }
+    .contact-link {
+      color: #1b294a;
+      text-decoration: none;
+    }
+    .contact-link:hover {
+      text-decoration: underline;
+    }
+    .section {
+      margin-bottom: 1.75rem;
+    }
+    .section-title {
+      font-size: 24pt;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #1b294a;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      border-bottom: 1px solid #1b294a;
+      padding-bottom: 0.25rem;
+    }
+    .summary {
+      font-size: 20pt;
+      line-height: 1.6;
+      color: #1b294a;
+    }
+    .experience-item {
+      margin-bottom: 1.5rem;
+    }
+    .company-role {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .company {
+      font-size: 22pt;
+      font-weight: 700;
+      color: #1b294a;
+    }
+    .company-name {
+      color: #1b294a;
+    }
+    .role {
+      font-size: 20pt;
+      font-weight: 500;
+      color: #1b294a;
+    }
+.dates {
+      font-size: 18pt;
+      color: #1b294a;
+      white-space: nowrap;
+    }
+    .bullets {
+      list-style: none;
+      padding-left: 0;
+    }
+    .bullets li {
+      font-size: 20pt;
+      line-height: 1.6;
+      color: #1b294a;
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .bullets li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #1b294a;
+      font-size: 22pt;
+      line-height: 1.6;
+    }
+    .tech-highlight {
+      font-weight: 600;
+      color: #1b294a;
+    }
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="name">MICHA<span class="initial">E</span>L A. ROBERTS</h1>
+      <div class="contact">
+        <span class="contact-item">Atlanta, GA</span>
+        <span class="contact-separator">|</span>
+        <span class="contact-item">(678) 477-3870</span>
+        <span class="contact-separator">|</span>
+        <a href="mailto:mikerobs238@hotmail.com" class="contact-item contact-link">mikerobs238@hotmail.com</a>
+        <span class="contact-separator">|</span>
+        <a href="https://linkedin.com/in/michael-roberts" target="_blank" class="contact-item contact-link">LinkedIn</a>
+        <span class="contact-separator">|</span>
+        <a href="https://github.com/mikerobs238" target="_blank" class="contact-item contact-link">GitHub</a>
+      </div>
+    </header>
+
+    <section class="section">
+      <h2 class="section-title">Professional Summary</h2>
+      <p class="summary">
+        Senior Software Engineer with 5+ years building cloud-native applications, platform infrastructure, and distributed systems across AWS and GCP. Known for reducing operational overhead, shipping reliable production systems, and turning complex infrastructure problems into clean, maintainable solutions.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Professional Experience</h2>
+
+      <div class="experience-item">
+        <div class="company-role">
+          <div>
+            <span class="company company-name">Cargill, Incorporated</span>
+          </div>
+          <span class="dates">Nov 2024 – Present</span>
+        </div>
+        <div class="company-role">
+          <span class="role">Senior Software Engineer</span>
+        </div>
+        <ul class="bullets">
+          <li>Cut infrastructure provisioning time by <span class="tech-highlight">90%</span> by designing reusable Terraform modules and automated deployment pipelines adopted across multi-account AWS environments.</li>
+          <li>Shipped observability and incident-response tooling (<span class="tech-highlight">OpenTelemetry</span>, Prometheus, Grafana, Datadog) that drove mean response times below 2 minutes for production incidents.</li>
+          <li>Built internal developer platform tooling that improved deployment consistency and reduced manual toil across Kubernetes workloads and distributed services.</li>
+        </ul>
+      </div>
+
+      <div class="experience-item">
+        <div class="company-role">
+          <div>
+            <span class="company company-name">Amazon Web Services</span>
+          </div>
+          <span class="dates">Jul 2022 – Oct 2024</span>
+        </div>
+        <div class="company-role">
+          <span class="role">Solutions Architect</span>
+        </div>
+        <ul class="bullets">
+          <li>Architected and delivered cloud-native solutions for enterprise customers, focusing on container orchestration, serverless architectures, and infrastructure as code.</li>
+          <li>Designed migration strategies for legacy on-premise workloads to AWS, reducing operational costs by up to 40% through right-sizing and managed service adoption.</li>
+          <li>Authored technical guides and best-practice documentation adopted across multiple AWS solutions architecture teams.</li>
+        </ul>
+      </div>
+
+      <div class="experience-item">
+        <div class="company-role">
+          <div>
+            <span class="company company-name">Cargill, Incorporated</span>
+          </div>
+          <span class="dates">Jun 2019 – Jun 2022</span>
+        </div>
+        <div class="company-role">
+          <span class="role">Software Engineer</span>
+        </div>
+        <ul class="bullets">
+          <li>Developed and maintained full-stack applications for agricultural supply chain management, serving 10,000+ users globally.</li>
+          <li>Implemented CI/CD pipelines using GitLab CI, reducing deployment time from hours to minutes.</li>
+          <li>Modernized legacy .NET Framework applications to .NET Core, improving performance and enabling containerization.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Technical Skills</h2>
+      <div style="font-size: 20pt; line-height: 1.8; color: #1b294a;">
+        <strong>Cloud & Infrastructure:</strong> AWS (EC2, ECS, EKS, Lambda, RDS, CloudFormation, Terraform), GCP, Kubernetes, Docker, Terraform, Helm<br>
+        <strong>Languages:</strong> TypeScript, Python, Go, C#, JavaScript, SQL, Bash<br>
+        <strong>Observability & Monitoring:</strong> OpenTelemetry, Prometheus, Grafana, Datadog, CloudWatch<br>
+        <strong>CI/CD & Developer Tools:</strong> GitLab CI, GitHub Actions, ArgoCD, Flux, Jenkins<br>
+        <strong>Databases & Messaging:</strong> PostgreSQL, DynamoDB, Redis, Kafka, RabbitMQ, SQS/SNS
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Education</h2>
+      <div style="font-size: 20pt; line-height: 1.8; color: #1b294a;">
+        <strong>Bachelor of Science in Computer Science</strong><br>
+        Georgia Institute of Technology, Atlanta, GA
+      </div>
+    </section>
+  </div>
+</body>
+</html>
