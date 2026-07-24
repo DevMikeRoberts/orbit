@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 const prompts: { text: string; href: string }[] = [
   { text: "check out my GitHub →", href: "https://github.com/devmikeroberts" },
   { text: "read my blog →", href: "https://mikeroberts.bearblog.dev" },
-  { text: "view my resume →", href: "/michael_roberts_resume.pdf" },
+  { text: "view my resume →", href: "/michael_roberts_resume.docx" },
 ];
 
 const TYPE_SPEED = 52;
