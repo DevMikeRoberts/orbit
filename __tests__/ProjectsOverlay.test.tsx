@@ -10,7 +10,7 @@ describe("ProjectsOverlay", () => {
 
   it("renders the Orbit project card", () => {
     render(<ProjectsOverlay view="projects" onViewChange={() => {}} />);
-    expect(screen.getByText("Orbit")).toBeInTheDocument();
+    expect(screen.getByText("Orbit App")).toBeInTheDocument();
   });
 
   it("links Orbit card to GitHub", () => {
